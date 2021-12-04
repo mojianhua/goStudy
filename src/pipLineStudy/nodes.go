@@ -14,7 +14,7 @@ func ArraySource( a ...int) chan int {
 	return out
 }
 
-//建立管道并且快速排序
+//内部排序
 func InMemSort(in <-chan int) <-chan int{
 	//定义一个管道
 	out := make(chan int)
@@ -32,9 +32,23 @@ func InMemSort(in <-chan int) <-chan int{
 			//将来V放入到out 管道里面
 			out <- v
 		}
-		//关闭管道
+		//关闭管道,否则报错
 		close(out)
 	}()
 	//返回
 	return out
+}
+
+//归并排序
+func Merge(in1,in2 <-chan int)  <-chan int {
+	out := make(chan int)
+	go func() {
+		v1,ok1 := <-in1
+		v2,ok2 := <-in2
+		for ok1 || ok2{
+			if !ok2 || (ok1 && v1 <= v2){
+
+			}
+		}
+	}()
 }
